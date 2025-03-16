@@ -15,20 +15,19 @@ namespace API_AMADEUS.Data
 
         public async Task<List<User>> GetAllUsers()
         {
-            return await db.User.ToListAsync();
+            return await db.Users.ToListAsync();
         }
 
         public async Task<User?> GetUserById(int id)
         {
-            return await db.User.FirstOrDefaultAsync(User => User.Id == id);
+            return await db.Users.FirstOrDefaultAsync(user => user.Id == id);
         }
 
-        //Funcion para crear un usuario
-        public async Task<User> CreateUser(User User)
+        public async Task<User> CreateUser(User user)
         {
-            db.User.Add(User);
+            db.Users.Add(user);
             await db.SaveChangesAsync();
-            return User;
+            return user;
         }
     }
 }

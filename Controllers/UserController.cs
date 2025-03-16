@@ -6,38 +6,39 @@ using Microsoft.AspNetCore.Mvc;
 namespace API_AMADEUS.Controllers;
 
 [Route("api/[controller]")]
-public class UserController(ApplicationDbContext context) : ControllerBase {
+public class UserController : ControllerBase {
 
-    private readonly UserService userService = new(context);
+    private readonly UserService userService;
+
+    public UserController(ApplicationDbContext context) {
+        userService = new UserService(context);
+    }
 
     [HttpGet]
     public async Task<IActionResult> GetUsers(){
-        
-        var User = await UserService.GetAllUsers();
-        return Ok(User);
+        var users = await userService.GetAllUsers();
+        return Ok(users);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<User>> GetUser(int id) {
-        var User = await UserService.GetUserById(id);
+        var user = await userService.GetUserById(id);
 
-        if (User == null) {
+        if (user == null) {
             return NotFound(new ErrorResponse {Message = "User not found", StatusCode = 404});
         }
 
-        return User;
+        return user;
     }
 
     [HttpPost]
     public async Task<ActionResult<User>> CreateUser(User user) {
-        
-        var CreateUser = await UserService.CreateUser(User);
+        var createdUser = await userService.CreateUser(user);
 
-        if (CreateUser == null) {
-            return NotFound(new ErrorResponse {Message = "USER NOT BEEN CREATED", StatusCode = 404});
+        if (createdUser == null) {
+            return NotFound(new ErrorResponse {Message = "User not been created", StatusCode = 404});
         }
 
-        return CreatedAtAction("GetUser", new { id = CreateUser.Id }, CreateUser);
+        return CreatedAtAction("GetUser", new { id = createdUser.Id }, createdUser);
     }
-
 }

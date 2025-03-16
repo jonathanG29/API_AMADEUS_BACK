@@ -10,7 +10,7 @@ namespace API_AMADEUS.Services
 
         public UserService(ApplicationDbContext context)
         {
-                _context = context;
+            _context = context;
         }
 
         public async Task<List<User>> GetAllUsers()
@@ -25,9 +25,9 @@ namespace API_AMADEUS.Services
 
         public async Task<User> CreateUser(User user)
         {
-            _context.User.Add(User);
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            return User;
+            return user;
         }
     }
 }

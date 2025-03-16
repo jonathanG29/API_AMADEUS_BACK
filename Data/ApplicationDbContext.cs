@@ -16,8 +16,8 @@ namespace API_AMADEUS.Data
             modelBuilder.Entity<User>().ToTable("users").HasKey(u => u.Id);
 
             modelBuilder.Entity<User>().Property(u => u.Id).HasColumnName("id");
-            modelBuilder.Entity<User>().Property(u => u.Name).HasColumnName("full_name");
-            modelBuilder.Entity<User>().Property(u => u.Email).HasColumnName("email");
+            modelBuilder.Entity<User>().Property(u => u.full_name).HasColumnName("full_name");
+            modelBuilder.Entity<User>().Property(u => u.email).HasColumnName("email");
         }
     }
 }
