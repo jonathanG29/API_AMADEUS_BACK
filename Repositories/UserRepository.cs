@@ -25,7 +25,7 @@ namespace API_AMADEUS.Data
 
         public async Task<User> CreateUser(User user)
         {
-            db.Users.Add(user);
+            var newuser = db.Users.Add(user);
             await db.SaveChangesAsync();
             return user;
         }

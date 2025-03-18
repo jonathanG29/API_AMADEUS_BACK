@@ -1,33 +1,27 @@
 using API_AMADEUS.Models;
 using API_AMADEUS.Data;
-using Microsoft.EntityFrameworkCore;
+// using Microsoft.EntityFrameworkCore;
 
 namespace API_AMADEUS.Services
 {
-    public class UserService
+    public class UserService(ApplicationDbContext context)
     {
-        private readonly ApplicationDbContext _context;
+        private readonly UserRepository UserRepository= new(context);
 
-        public UserService(ApplicationDbContext context)
-        {
-            _context = context;
-        }
 
         public async Task<List<User>> GetAllUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await UserRepository.GetAllUsers();
         }
 
         public async Task<User?> GetUserById(int id)
         {
-            return await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
+            return await UserRepository.GetUserById(id);
         }
 
         public async Task<User> CreateUser(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-            return user;
+            return await UserRepository.CreateUser(user);
         }
     }
 }
