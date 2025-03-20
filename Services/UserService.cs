@@ -21,6 +21,16 @@ namespace API_AMADEUS.Services
 
         public async Task<User> CreateUser(User user)
         {
+            var existingUsers = await UserRepository.GetAllUsers();
+            var existingUser = existingUsers.FirstOrDefault(u => u.email == user.email);
+
+            if (existingUser != null)
+            {
+                // Devolver la información del usuario existente 
+                return existingUser;
+            }
+
+            // Crear el nuevo usuario
             return await UserRepository.CreateUser(user);
         }
     }
