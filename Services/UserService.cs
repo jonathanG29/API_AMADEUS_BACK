@@ -21,6 +21,13 @@ namespace API_AMADEUS.Services
 
         public async Task<User> CreateUser(User user)
         {
+
+            // verrificar si el correo electronico esta vacio
+            if (string.IsNullOrEmpty(user.email))
+            {
+                throw new InvalidOperationException("Email is required");
+            }
+
             var existingUsers = await UserRepository.GetAllUsers();
             var existingUser = existingUsers.FirstOrDefault(u => u.email == user.email);
 

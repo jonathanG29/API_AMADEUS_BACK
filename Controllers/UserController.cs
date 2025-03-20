@@ -32,10 +32,14 @@ public class UserController(ApplicationDbContext context) : ControllerBase {
 
     [HttpPost]
     public async Task<ActionResult<User>> CreateUser(User user) {
-        try
+    try
         {
             var createdUser = await userService.CreateUser(user);
             return CreatedAtAction("GetUser", new { id = createdUser.Id }, createdUser);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new ErrorResponse { Message = ex.Message, StatusCode = 400 });
         }
         catch (InvalidOperationException ex)
         {
