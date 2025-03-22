@@ -1,4 +1,5 @@
 using API_AMADEUS.Data;
+using API_AMADEUS.DTOs;
 using API_AMADEUS.Models;
 using API_AMADEUS.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,8 +16,14 @@ public class UserController(ApplicationDbContext context) : ControllerBase {
     public async Task<IActionResult> GetUsers(){
 
         var users = await userService.GetAllUsers();
+        var userDTOs = users.Select(user => new UserDTO
+        {
+            Id = user.Id,
+            full_name = user.full_name,
+            email = user.email,
+        }).ToList();
 
-        return Ok(users);
+        return Ok(userDTOs);
     }
 
     [HttpGet("{id}")]
@@ -27,15 +34,36 @@ public class UserController(ApplicationDbContext context) : ControllerBase {
             return NotFound(new ErrorResponse {Message = "User not found", StatusCode = 404});
         }
 
-        return Ok(user);
+        var userDTO = new UserDTO
+        {
+            Id = user.Id,
+            full_name = user.full_name,
+            email = user.email,
+        };
+
+        return Ok(userDTO);
     }
 
     [HttpPost]
-    public async Task<ActionResult<User>> CreateUser(User user) {
-    try
+    public async Task<ActionResult<UserDTO>> CreateUser(UserDTO userDTO) {
+        try
         {
+            var user = new User
+            {
+                full_name = userDTO.full_name,
+                email = userDTO.email
+            };
+
             var createdUser = await userService.CreateUser(user);
-            return CreatedAtAction("GetUser", new { id = createdUser.Id }, createdUser);
+
+            var createdUserDTO = new UserDTO
+            {
+                Id = createdUser.Id,
+                full_name = createdUser.full_name,
+                email = createdUser.email
+            };
+
+            return CreatedAtAction("GetUser", new { id = createdUserDTO.Id }, createdUserDTO);
         }
         catch (ArgumentException ex)
         {
@@ -48,20 +76,22 @@ public class UserController(ApplicationDbContext context) : ControllerBase {
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateUserFullName(int id, [FromBody] User user)
+    public async Task<IActionResult> UpdateUserFullName(int id, [FromBody] UserUpdateDTO userUpdateDTO)
     {
-        if (id != user.Id)
-        {
-            return BadRequest(new ErrorResponse { Message = "User ID mismatch", StatusCode = 400 });
-        }
-
-        var updatedUser = await userService.UpdateUserFullName(id, user.full_name);
+        var updatedUser = await userService.UpdateUserFullName(id, userUpdateDTO.full_name);
 
         if (updatedUser == null)
         {
             return NotFound(new ErrorResponse { Message = "User not found", StatusCode = 404 });
         }
 
-        return Ok(updatedUser);
+        var updatedUserDTO = new UserDTO
+        {
+            Id = updatedUser.Id,
+            full_name = updatedUser.full_name,
+            email = updatedUser.email
+        };
+
+        return Ok(updatedUserDTO);
     }
 }
