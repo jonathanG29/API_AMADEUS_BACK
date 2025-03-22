@@ -46,4 +46,22 @@ public class UserController(ApplicationDbContext context) : ControllerBase {
             return BadRequest(new ErrorResponse { Message = ex.Message, StatusCode = 400 });
         }
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateUserFullName(int id, [FromBody] User user)
+    {
+        if (id != user.Id)
+        {
+            return BadRequest(new ErrorResponse { Message = "User ID mismatch", StatusCode = 400 });
+        }
+
+        var updatedUser = await userService.UpdateUserFullName(id, user.full_name);
+
+        if (updatedUser == null)
+        {
+            return NotFound(new ErrorResponse { Message = "User not found", StatusCode = 404 });
+        }
+
+        return Ok(updatedUser);
+    }
 }

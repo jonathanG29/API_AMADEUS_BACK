@@ -40,5 +40,22 @@ namespace API_AMADEUS.Services
             // Crear el nuevo usuario
             return await UserRepository.CreateUser(user);
         }
+
+        public async Task<User?> UpdateUserFullName(int id, string fullName)
+        {
+            var user = await UserRepository.GetUserById(id);
+            if (user == null)
+            {
+                return null;
+            }
+
+            if (user.full_name != fullName)
+            {
+                user.full_name = fullName;
+                await UserRepository.SaveChangesAsync();
+            }
+
+            return user;
+        }
     }
 }

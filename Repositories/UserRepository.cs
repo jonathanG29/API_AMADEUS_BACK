@@ -29,5 +29,28 @@ namespace API_AMADEUS.Data
             await db.SaveChangesAsync();
             return user;
         }
+
+        //update name del usuario
+        public async Task<User?> UpdateUserFullName(int id, string fullName)
+        {
+            var user = await db.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if (user == null)
+            {
+                return null;
+            }
+
+            if (user.full_name != fullName)
+            {
+                user.full_name = fullName;
+                await db.SaveChangesAsync();
+            }
+
+            return user;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await db.SaveChangesAsync();
+        }
     }
 }
