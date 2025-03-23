@@ -14,9 +14,7 @@ namespace API_AMADEUS.Data
         public DbSet<QuestionOption> QuestionOptions { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Destination> Destinations { get; set; }
-
-
-
+        public DbSet<Answer> Answers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,7 +47,13 @@ namespace API_AMADEUS.Data
             modelBuilder.Entity<Destination>().Property(d => d.FirstCityId).HasColumnName("first_city_id");
             modelBuilder.Entity<Destination>().Property(d => d.SecondCityId).HasColumnName("second_city_id");
 
-
+            //Answer
+            modelBuilder.Entity<Answer>().ToTable("answer").HasKey(a => a.Id);
+            modelBuilder.Entity<Answer>().Property(a => a.Id).HasColumnName("id");
+            modelBuilder.Entity<Answer>().Property(a => a.UserId).HasColumnName("user_id");
+            modelBuilder.Entity<Answer>().Property(a => a.QuestionId).HasColumnName("question_id");
+            modelBuilder.Entity<Answer>().Property(a => a.QuestionOptionId).HasColumnName("question_option_id");
+            modelBuilder.Entity<Answer>().Property(a => a.CreatedAt).HasColumnName("date");
         }
     }
 }
