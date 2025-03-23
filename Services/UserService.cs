@@ -21,20 +21,27 @@ namespace API_AMADEUS.Services
 
         public async Task<User> CreateUser(User user)
         {
-
-            // verrificar si el correo electronico esta vacio
-            if (string.IsNullOrEmpty(user.email))
+            // Verificar si el correo electrónico está vacío y el nombre
+            if (string.IsNullOrEmpty(user.email) || string.IsNullOrEmpty(user.full_name))
             {
-                throw new InvalidOperationException("Email is required");
+            throw new ArgumentException("El correo electrónico y el nombre completo no pueden estar vacíos.");
             }
 
             var existingUsers = await UserRepository.GetAllUsers();
             var existingUser = existingUsers.FirstOrDefault(u => u.email == user.email);
 
+            // Si el usuario ya existe
             if (existingUser != null)
             {
-                // Devolver la información del usuario existente 
-                return existingUser;
+            // Comparar el full_name enviado con el full_name registrado
+            if (existingUser.full_name != user.full_name)
+            {
+                // Llamar el método para actualizar el nombre
+                await UpdateUserFullName(existingUser.Id, user.full_name);
+            }
+
+            // Retornar el usuario y mostrar un status code 200
+            return existingUser;
             }
 
             // Crear el nuevo usuario
@@ -43,24 +50,19 @@ namespace API_AMADEUS.Services
 
         public async Task<User?> UpdateUserFullName(int id, string fullName)
         {
-            return await UserRepository.UpdateUserFullName(id, fullName);
+            var user = await UserRepository.GetUserById(id);
+            if (user == null)
+            {
+            return null;
+            }
+
+            if (user.full_name != fullName)
+            {
+            user.full_name = fullName;
+            await UserRepository.SaveChangesAsync();
+            }
+
+            return user;
         }
-
-        // public async Task<User?> UpdateUserFullName(int id, string fullName)
-        // {
-        //     var user = await UserRepository.GetUserById(id);
-        //     if (user == null)
-        //     {
-        //         return null;
-        //     }
-
-        //     if (user.full_name != fullName)
-        //     {
-        //         user.full_name = fullName;
-        //         await UserRepository.SaveChangesAsync();
-        //     }
-
-        //     return user;
-        // }
     }
 }
