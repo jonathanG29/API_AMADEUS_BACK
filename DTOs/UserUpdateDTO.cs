@@ -2,6 +2,6 @@ namespace API_AMADEUS.DTOs
 {
     public class UserUpdateDTO
     {
-        public string full_name { get; set; }
+        public string full_name { get; set; } = string.Empty;
     }
 }
