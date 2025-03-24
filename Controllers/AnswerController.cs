@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace API_AMADEUS.Controllers
 {
+    // This controller handles the creation and retrieval of answers.
     [ApiController]
     [Route("api/[controller]")]
     public class AnswerController : ControllerBase

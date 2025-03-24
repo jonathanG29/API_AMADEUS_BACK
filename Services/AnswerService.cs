@@ -31,7 +31,7 @@ namespace API_AMADEUS.Services
         {
             return await _context.Answers.ToListAsync();
         }
-
+        // This method creates a new answer in the database.
         public async Task<Answer> CreateAnswerAsync(AnswerDTOCreate answerDto)
         {
             if (answerDto == null)

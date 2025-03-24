@@ -24,7 +24,8 @@ namespace API_AMADEUS.Data
         {
             return await _context.Answers.FirstOrDefaultAsync(answer => answer.Id == id);
         }
-
+        //
+        // This method creates a new answer in the database.
         public async Task<Answer> CreateAnswer(AnswerDTOCreate answerDto)
         {
             var answer = new Answer
