@@ -8,7 +8,10 @@ namespace API_AMADEUS.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string full_name { get; set; } = string.Empty;
+        [Required]
+        [EmailAddress]
         public string email { get; set; } = string.Empty;
 
         public User()
