@@ -21,7 +21,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<API_AMADEUS.Services.AnswerService>();
 
 builder.Services.AddControllers();
 
