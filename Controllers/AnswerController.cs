@@ -1,6 +1,8 @@
+using API_AMADEUS.DTOs;
 using API_AMADEUS.Models;
 using API_AMADEUS.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace API_AMADEUS.Controllers
@@ -17,15 +19,21 @@ namespace API_AMADEUS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAnswer([FromBody] Answer answer)
+        public async Task<IActionResult> CreateAnswers([FromBody] List<AnswerDTOCreate> answerDtos)
         {
-            if (answer == null)
+            if (answerDtos == null || answerDtos.Count == 0)
             {
                 return BadRequest(new { Message = "Invalid answer data", StatusCode = 400 });
             }
 
-            var createdAnswer = await _answerService.CreateAnswerAsync(answer);
-            return CreatedAtAction(nameof(GetAnswerById), new { id = createdAnswer.Id }, createdAnswer);
+            var createdAnswers = new List<Answer>();
+            foreach (var answerDto in answerDtos)
+            {
+                var createdAnswer = await _answerService.CreateAnswerAsync(answerDto);
+                createdAnswers.Add(createdAnswer);
+            }
+
+            return Ok(createdAnswers);
         }
 
         [HttpGet("{id}")]
