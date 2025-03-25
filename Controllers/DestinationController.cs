@@ -19,9 +19,22 @@ public class DestinationController(ApplicationDbContext context) : ControllerBas
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult> GetDestination(int id)
+    public ActionResult GetDestinationHash(string id)
     {
-        var destination = await destinationService.GetDestinationById(id);
+        string destination = destinationService.GetDestinationHash(id);
+
+        if (destination == null)
+        {
+            return NotFound(new { Message = "Destination not found", StatusCode = 404 });
+        }
+
+        return Ok(destination);
+    }
+
+    [HttpGet("combination/{combination}")]
+    public async Task<IActionResult> GetDestinationByCombination(string combination)
+    {
+        var destination = await destinationService.GetDestinationByCombination(combination);
 
         if (destination == null)
         {

@@ -21,5 +21,12 @@ namespace API_AMADEUS.Data
         {
             return await db.Destinations.FirstOrDefaultAsync(d => d.Id == id);
         }
+
+        public async Task<Destination?> GetDestinationByCombination(string combination)
+        {
+            return await db.Destinations
+                .FirstOrDefaultAsync(d => d.Combination == combination);
+        }
+
     }
 }
