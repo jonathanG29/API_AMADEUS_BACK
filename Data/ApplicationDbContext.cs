@@ -39,6 +39,7 @@ namespace API_AMADEUS.Data
             modelBuilder.Entity<City>().ToTable("city").HasKey(c => c.Id);
             modelBuilder.Entity<City>().Property(c => c.Id).HasColumnName("id");
             modelBuilder.Entity<City>().Property(c => c.Description).HasColumnName("description");
+            modelBuilder.Entity<City>().Property(c => c.img_city).HasColumnName("img_city");
 
             //Destination
             modelBuilder.Entity<Destination>().ToTable("destination").HasKey(d => d.Id);
