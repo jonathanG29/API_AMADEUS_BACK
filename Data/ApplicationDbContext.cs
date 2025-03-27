@@ -15,6 +15,7 @@ namespace API_AMADEUS.Data
         public DbSet<City> Cities { get; set; }
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<Answer> Answers { get; set; }
+        public DbSet<UserAdminModel> UserAdmin { get; set; } // Cambiado a "UserAdmin"
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,6 +56,13 @@ namespace API_AMADEUS.Data
             modelBuilder.Entity<Answer>().Property(a => a.QuestionId).HasColumnName("question_id");
             modelBuilder.Entity<Answer>().Property(a => a.QuestionOptionId).HasColumnName("question_option_id");
             modelBuilder.Entity<Answer>().Property(a => a.CreatedAt).HasColumnName("date");
+
+            // admin user
+            modelBuilder.Entity<UserAdminModel>().ToTable("user_admin").HasKey(a => a.Id); // Cambiado a "user_admin"
+            modelBuilder.Entity<UserAdminModel>().Property(a => a.Id).HasColumnName("id"); // Mapeo explícito de "Id" a "id"
+            modelBuilder.Entity<UserAdminModel>().Property(a => a.username).HasColumnName("username");
+            modelBuilder.Entity<UserAdminModel>().Property(a => a.user_password).HasColumnName("user_password");
+
         }
     }
 }
