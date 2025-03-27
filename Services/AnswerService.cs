@@ -3,7 +3,9 @@ using API_AMADEUS.DTOs;
 using API_AMADEUS.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace API_AMADEUS.Services
 {
@@ -50,6 +52,26 @@ namespace API_AMADEUS.Services
             _context.Answers.Add(answer);
             await _context.SaveChangesAsync();
             return answer;
+        }
+
+        public async Task<List<AnswerDetailDTO>> GetAnswersWithDetailsAsync()
+        {
+            var answers = await _context.Answers
+                .Include(a => a.Question)
+                .Include(a => a.QuestionOption)
+                .Select(a => new AnswerDetailDTO
+                {
+                    Id = a.Id,
+                    UserId = a.UserId,
+                    QuestionId = a.QuestionId,
+                    QuestionText = a.Question.QuestionText,
+                    QuestionOptionId = a.QuestionOptionId,
+                    OptionDescription = a.QuestionOption.Description,
+                    CreatedAt = a.CreatedAt
+                })
+                .ToListAsync();
+
+            return answers;
         }
     }
 }
