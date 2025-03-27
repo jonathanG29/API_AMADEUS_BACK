@@ -54,5 +54,12 @@ namespace API_AMADEUS.Controllers
             var answers = await _answerService.GetAllAnswersAsync();
             return Ok(answers);
         }
+
+        [HttpGet("details")]
+        public async Task<IActionResult> GetAnswersWithDetails()
+        {
+            var answers = await _answerService.GetAnswersWithDetailsAsync();
+            return Ok(answers);
+        }
     }
 }
