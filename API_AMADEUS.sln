@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_AMADEUS", "API_AMADEUS\API_AMADEUS.csproj", "{70D9986E-DE5A-4F13-93F8-14E45BDB4102}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_AMADEUS", "API_AMADEUS.csproj", "{70D9986E-DE5A-4F13-93F8-14E45BDB4102}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

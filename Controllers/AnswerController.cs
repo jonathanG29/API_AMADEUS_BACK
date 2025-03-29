@@ -1,6 +1,7 @@
 using API_AMADEUS.DTOs;
 using API_AMADEUS.Models;
 using API_AMADEUS.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -55,6 +56,7 @@ namespace API_AMADEUS.Controllers
             return Ok(answers);
         }
 
+        [Authorize(Roles = "Admin")] // Solo accesible para usuarios con rol "Admin"
         [HttpGet("details")]
         public async Task<IActionResult> GetAnswersWithDetails()
         {
