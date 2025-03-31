@@ -34,7 +34,7 @@ API_AMADEUS/
 
 1. Clonar el repositorio:
 ```
-git clone <URL_DEL_REPOSITORIO>
+git clone https://github.com/jonathanG29/API_AMADEUS_BACK
 cd API_AMADEUS
 ```
 2. Configurar la base de datos:
