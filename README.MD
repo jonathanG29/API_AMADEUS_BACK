@@ -26,8 +26,8 @@ API_AMADEUS/
 ├── Repositories/         # Acceso a datos (e.g., UserAdminRepository)
 ├── Models/               # Modelos de datos (e.g., UserAdminModel)
 ├── Data/                 # Contexto de base de datos (e.g., ApplicationDbContext)
-├── [Program.cs](http://_vscodecontentref_/0)            # Configuración principal de la aplicación
-├── [appsettings.json](http://_vscodecontentref_/1)      # Configuración de la aplicación (e.g., conexión a la base de datos)
+├── [Program.cs]          # Configuración principal de la aplicación
+├── [appsettings.json]    # Configuración de la aplicación (e.g., conexión a la base de datos)
 ```
 
 ## Configuración
